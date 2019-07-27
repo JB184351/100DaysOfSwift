@@ -32,10 +32,13 @@ class ViewController: UITableViewController {
                 pictures.append(item)
             }
         }
+        
     }
     
     // Changing behavior from parent class and returning the number of rows that is in our array of pictures
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Challenge 2
+        pictures.sort()
         return pictures.count
     }
     
