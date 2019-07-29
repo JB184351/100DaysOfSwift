@@ -11,6 +11,9 @@ import UIKit
 class ViewController: UITableViewController {
 
     var pictures = [String]()
+    var numpics = 0
+    var currentpicnum = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,8 @@ class ViewController: UITableViewController {
             if item.hasPrefix("nssl") {
                 // This is a picture to load
                 pictures.append(item)
+                numpics = pictures.count
+                print(numpics)
             }
         }
         
@@ -52,7 +57,10 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            // Challenge 3
+            currentpicnum = indexPath.row
             vc.selectedImage = pictures[indexPath.row]
+            title = " \(currentpicnum + 1) out of \(numpics)"
             navigationController?.pushViewController(vc, animated: true)
         }
     }
