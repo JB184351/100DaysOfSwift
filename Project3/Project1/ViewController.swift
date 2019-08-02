@@ -38,9 +38,6 @@ class ViewController: UITableViewController {
             }
         }
         
-        // Challenge 2
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
-        
     }
     
     // Changing behavior from parent class and returning the number of rows that is in our array of pictures
@@ -66,15 +63,6 @@ class ViewController: UITableViewController {
             title = " \(currentpicnum + 1) out of \(numpics)"
             navigationController?.pushViewController(vc, animated: true)
         }
-    }
-    
-    // Challenge 2
-    @objc func shareTapped() {
-        
-        // Can Change image to the selectedImage to get the string of the picture
-        let vc = UIActivityViewController(activityItems: ["Link for App"], applicationActivities: [])
-        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(vc, animated: true)
     }
     
 }

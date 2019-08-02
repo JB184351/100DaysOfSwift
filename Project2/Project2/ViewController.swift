@@ -35,6 +35,8 @@ class ViewController: UIViewController {
         
         askQuestion()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        
     }
     
     func askQuestion(action: UIAlertAction! = nil) {
@@ -50,7 +52,7 @@ class ViewController: UIViewController {
         // Title in navigation bar
         title = countries[correctAnswer].uppercased() + " Score: \(scores)"
         
-        // Challenge 1
+        // Challenge 1 Day 21
         numQuestionsAsked += 1
     }
     
@@ -62,13 +64,13 @@ class ViewController: UIViewController {
             scores += 1
         }
         
-        // Challenge 3
+        // Challenge 3 Day 21
         else {
             title = "Wrong! it's \(countries[correctAnswer].uppercased())"
             scores -= 1
         }
         
-        // Challenge 2
+        // Challenge 2 Day 21
         if numQuestionsAsked == 10 {
             
             let finalalert = UIAlertController(title: title, message: "Your final score is \(scores) after ten questions", preferredStyle: .alert)
@@ -84,7 +86,13 @@ class ViewController: UIViewController {
         
     }
     
-    
+    // Challenge 3  Day 22
+    @objc func shareTapped() {
+        // Can Change image to the selectedImage to get the string of the picture
+        let ac = UIAlertController(title: title, message: "Your current score is \(scores)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        present(ac, animated: true)
+    }
     
 
 
