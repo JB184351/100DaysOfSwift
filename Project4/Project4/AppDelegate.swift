@@ -1,15 +1,15 @@
 //
 //  AppDelegate.swift
-//  Day 23
+//  Project4
 //
-//  Created by Justin Bengtson on 8/3/19.
+//  Created by Justin Bengtson on 8/5/19.
 //  Copyright © 2019 Justin Bengtson. All rights reserved.
 //
 
 import UIKit
 
 @UIApplicationMain
-   class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
