@@ -33,11 +33,15 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
         
+        // Challenge 2
+        let goBack = UIBarButtonItem(title: "Back", style: .plain, target: webView, action: #selector(webView.goBack))
+        let goForward = UIBarButtonItem(title: "Forward", style: .plain, target: webView, action: #selector(webView.goForward))
+        
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         let progressButton = UIBarButtonItem(customView: progressView)
         
-        toolbarItems = [progressButton, spacer, refresh]
+        toolbarItems = [goBack, progressButton, spacer, refresh, goForward]
         navigationController?.isToolbarHidden = false
         
         // Add Observer tells us who the observer is, property we want to observe, the value we want and a context value
@@ -54,6 +58,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
         
         // Goes through the array of safe websites to go
+        // If I manually change this for loop to be gone and replace the title with something that is not in the array of websites then challenge 1 is complete.
         for website in websites {
          ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
         }
@@ -92,6 +97,15 @@ class ViewController: UIViewController, WKNavigationDelegate {
                     decisionHandler(.allow)
                     return
                 }
+                
+                /*
+                 This also helps solve challenge 1 when uncommented
+                 else if !host.contains(website) {
+                 let ac = UIAlertController(title: title, message: "Cannot open website", preferredStyle: .alert)
+                 ac.addAction(UIAlertAction(title: title, style: .default, handler: openTapped))
+                 present(ac, animated: true)
+                 }
+                 */
             }
         }
         // Otherwise we don't load the website
