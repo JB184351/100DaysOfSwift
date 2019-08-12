@@ -104,7 +104,7 @@ class ViewController: UITableViewController {
         guard var tempWord = title?.lowercased() else { return false }
         
          if word == tempWord {
-         return false
+            return false
          }
  
         
