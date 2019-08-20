@@ -151,6 +151,7 @@ class ViewController: UIViewController {
                 
                 ac.addAction(UIAlertAction(title: "Let's Go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
+                numCorrect = 0
             }
             
         }
