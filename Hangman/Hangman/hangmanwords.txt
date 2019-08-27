@@ -1,0 +1,9 @@
+dog
+cat
+hotdog
+telephone
+house
+life
+tasks
+dictionary
+television
