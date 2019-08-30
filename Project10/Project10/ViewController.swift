@@ -44,10 +44,22 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     @objc func addNewPerson() {
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
+        // Challenge 2 Day 44
+            if (UIImagePickerController  .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
+                let vc = UIImagePickerController()
+                vc.sourceType = .camera
+                vc.allowsEditing = true
+                vc.delegate = self
+                present(vc, animated: true)
+        }
+        
+        else {
+            let picker = UIImagePickerController()
+            picker.allowsEditing = true
+            picker.delegate = self
+            present(picker, animated: true)
+        }
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -88,7 +100,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         })
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // Challenge 1 Day 44
+        ac.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {
+            (action:UIAlertAction!) -> Void in
+            
+            self.people.remove(at: indexPath.item)
+            self.collectionView.deleteItems(at: [indexPath])
+            self.collectionView.reloadData()
+        }))
         present(ac, animated: true)
     }
+    
+    
 }
 
