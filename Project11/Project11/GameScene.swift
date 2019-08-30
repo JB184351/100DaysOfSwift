@@ -11,6 +11,15 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scoreLabel: SKLabelNode!
+    // Challenge 1 Create the list of availiable ball colors
+    let ballArray = ["ballCyan", "ballRed", "ballYellow", "ballBlue", "ballPurple", "ballGreen", "ballGrey"]
+    var numBallsLabel: SKLabelNode!
+    
+    var numBalls = 5 {
+        didSet {
+           numBallsLabel.text = "You have \(numBalls) balls left"
+        }
+    }
     
     var score = 0 {
         didSet {
@@ -49,6 +58,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         editLabel.position = CGPoint(x: 80, y: 700)
         addChild(editLabel)
         
+        numBallsLabel = SKLabelNode(fontNamed: "Chalkduster")
+        numBallsLabel.text = "You have \(numBalls) balls left"
+        numBallsLabel.horizontalAlignmentMode = .center
+        numBallsLabel.position = CGPoint(x: 980 / 2, y: 700)
+        addChild(numBallsLabel)
+        
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
         
@@ -85,16 +100,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
                 box.physicsBody?.isDynamic = false
+                box.name = "box"
                 addChild(box)
             }
             else {
-                let ball = SKSpriteNode(imageNamed: "ballRed")
+                if numBalls > 0 {
+                
+                // Challenge 1: Choose a random ball color string and set it to the ball variable
+                let randomBallColor = ballArray.randomElement()
+                let ball = SKSpriteNode(imageNamed: randomBallColor!)
                 ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
                 ball.physicsBody?.restitution = 0.4
                 ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0
-                ball.position = location
+                // Challenge 2: Just made the x location wherever the user touches and made y the top of the screen manually
+                ball.position = CGPoint(x: location.x, y: 700)
                 ball.name = "ball"
                 addChild(ball)
+                numBalls -= 1
+            }
+                
             }
         }
     }
@@ -139,15 +163,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         slotGlow.run(spinForever)
     }
     
+    func destroyBox(box: SKNode) {
+        box.removeFromParent()
+    }
+    
     func collision(between ball: SKNode, object: SKNode) {
         if object.name == "good" {
             destroy(ball: ball)
             score += 1
+            numBalls += 1
         }
         
         else if object.name == "bad" {
             destroy(ball: ball)
             score -= 1
+        }
+        
+        // Challenge 3
+        else if object.name == "box" {
+            destroyBox(box: object)
         }
     }
     
@@ -165,13 +199,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        
         if nodeA.name == "ball" {
             collision(between: nodeA, object: nodeB)
         }
         else if nodeB.name == "ball" {
             collision(between: nodeB, object: nodeA)
         }
+        
+        // Challenge 3
+        else if nodeB.name == "box" {
+            collision(between: nodeB, object: nodeA)
+        }
+ 
     }
 
 }
